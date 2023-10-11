@@ -7,5 +7,5 @@ class Item(models.Model):
     item_desc = models.CharField(max_length=300)
     item_price = models.IntegerField()
 
-def __str__(self):
-    return self.item_name
+    def __str__(self):
+        return self.item_name
