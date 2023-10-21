@@ -5,4 +5,18 @@ from clothing.models import Item
 
 def index(request):
     itemlist = Item.objects.all()
-    return HttpResponse(itemlist)
+    
+    context = {
+        'itemlist':itemlist
+    }
+
+    return render(request, 'clothing/index.html', context)
+
+def detail(request, item_id):
+    item = Item.objects.get(pk=item_id)
+
+    context = {
+        'item':item
+    }
+
+    return render(request, 'clothing/detail.html', context)
