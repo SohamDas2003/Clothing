@@ -11,9 +11,9 @@
 		<h1>This is an index page</h1>
 
 		{% for item in itemlist %}
-
+		<img src="{{ item.item_image }}" />
 		<ul>
-			<a href="/clothing/detail/{{ item.id }}/">
+			<a href="{% url 'clothing:detail' item.id %}">
 				{{ item.id }} -- {{ item.item_name }}
 			</a>
 		</ul>
