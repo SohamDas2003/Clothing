@@ -5,19 +5,78 @@
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>Genx</title>
 	</head>
-	<body>
-		<h1>This is an index page</h1>
+	<body class="bg-light bg-gradient">
+		{% extends 'clothing/base.html' %} {% block body %}
 
+		<center>
+			<div
+				id="carouselExampleAutoplaying"
+				class="carousel slide mb-5"
+				data-bs-ride="carousel"
+				style="height: 400px; width: 100%">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img
+							src="https://images.pexels.com/photos/3965545/pexels-photo-3965545.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+							class="d-block"
+							alt="..."
+							style="height: 400px; width: 100%" />
+					</div>
+					<div class="carousel-item">
+						<img
+							src="https://images.pexels.com/photos/3735641/pexels-photo-3735641.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+							class="d-block"
+							alt="..."
+							style="height: 400px; width: 100%" />
+					</div>
+					<div class="carousel-item">
+						<img
+							src="https://images.pexels.com/photos/3965551/pexels-photo-3965551.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+							class="d-block"
+							alt="..."
+							style="height: 400px; width: 100%" />
+					</div>
+				</div>
+				<button
+					class="carousel-control-prev"
+					type="button"
+					data-bs-target="#carouselExampleAutoplaying"
+					data-bs-slide="prev">
+					<span
+						class="carousel-control-prev-icon"
+						aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button
+					class="carousel-control-next"
+					type="button"
+					data-bs-target="#carouselExampleAutoplaying"
+					data-bs-slide="next">
+					<span
+						class="carousel-control-next-icon"
+						aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+		</center>
 		{% for item in itemlist %}
-		<img src="{{ item.item_image }}" />
-		<ul>
-			<a href="{% url 'clothing:detail' item.id %}">
-				{{ item.id }} -- {{ item.item_name }}
-			</a>
-		</ul>
-
-		{% endfor %}
+		<div
+			class="card mb-4"
+			style="width: 18rem">
+			<img src="{{ item.item_image }}" />
+			<div class="card-body">
+				<h5 class="card-title">{{ item.item_name }}</h5>
+				<p class="card-text">{{ item.item_desc | truncatewords:6 }}</p>
+				<p class="card-text">₹{{ item.item_price }}</p>
+				<a
+					href="{% url 'clothing:detail' item.id %}"
+					class="btn btn-primary"
+					>Details</a
+				>
+			</div>
+		</div>
+		{% endfor %} {% endblock %}
 	</body>
 </html>
