@@ -17,7 +17,7 @@
 			crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<nav class="navbar bg-dark navbar-expand-lg mb-4">
+		<nav class="navbar bg-dark navbar-expand-lg">
 			<div class="container-fluid">
 				<img
 					src="https://mir-s3-cdn-cf.behance.net/projects/404/48ad70142099899.Y3JvcCwzMzk5LDI2NTksMzAyLDA.jpg"
@@ -54,14 +54,24 @@
 								>Home</a
 							>
 						</li>
+						{% if user.is_authenticated %}
 						<li class="nav-item">
 							<a
 								class="nav-link"
-								href="#"
+								href="{% url 'profile' %}"
 								style="color: white"
 								>Profile</a
 							>
 						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="{% url 'logout' %}"
+								style="color: white"
+								>Logout</a
+							>
+						</li>
+						{% else %}
 						<li class="nav-item">
 							<a
 								class="nav-link"
@@ -70,6 +80,15 @@
 								>Sign Up</a
 							>
 						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="{% url 'login' %}"
+								style="color: white"
+								>Login</a
+							>
+						</li>
+						{% endif %}
 						<li class="nav-item dropdown">
 							<a
 								class="nav-link dropdown-toggle"
@@ -126,10 +145,46 @@
 							type="submit">
 							Search
 						</button>
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signupModal">
+						SignUp
+						</button>
 					</form>
 				</div>
 			</div>
 		</nav>
+
+		<!-- SignUp Modal -->
+		<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="signupModalLabel">Register</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form method="POST">
+					{% csrf_token %}
+					{{ form }}
+					<button type="submit">Sign Up</button>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+			</div>
+		</div>
+		</div>
+		{% if messages %}
+
+			{% for message in messages %}
+				<div class="alert alert-{{ message.tags }}">
+					{{ message }}
+				</div>
+			{% endfor %}
+
+		{% endif %}
+
 		{% block body %} {% endblock %}
 	</body>
 </html>

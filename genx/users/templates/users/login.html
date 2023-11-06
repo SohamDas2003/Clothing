@@ -1,6 +1,6 @@
 {% extends 'clothing/base.html' %} {% block body %}
 
-<center>
+{% comment %} <center>
 <div class="card text-center" style="width:40%">
     <div class="card-header">Login</div>
         <div class="card-body">
@@ -39,5 +39,16 @@
             </p>
         </div>
 </div>
-</center>
+</center> {% endcomment %}
+<form method="POST">
+    {% csrf_token %}
+
+    <label for="user">Username:</label><br>
+    <input type="text" id="user" name="username"><br>
+
+    <label for="pass">Password:</label><br>
+    <input type="password" id="pass" name="password"><br><br>
+
+    <button type="submit">Login</button>
+</form>
 {% endblock %}
