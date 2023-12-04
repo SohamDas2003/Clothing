@@ -1,7 +1,9 @@
 {% extends 'clothing/base.html' %} {% block body %}
 
-{% comment %} <center>
-<div class="card text-center" style="width:40%">
+
+<br><br><br><br><br><br>
+<center>
+<div class="card text" style="width:40%">
     <div class="card-header">Login</div>
         <div class="card-body">
             <p class="card-text">
@@ -16,7 +18,8 @@
                         <input
                             type="text"
                             class="form-control"
-                            id="user" />
+                            id="user"
+                            name="username" />
                     </div>
                     <div class="mb-3">
                         <label
@@ -27,7 +30,8 @@
                         <input
                             type="password"
                             class="form-control"
-                            id="pass" />
+                            id="pass"
+                            name="password" />
                     </div>
 
                     <button
@@ -39,16 +43,5 @@
             </p>
         </div>
 </div>
-</center> {% endcomment %}
-<form method="POST">
-    {% csrf_token %}
-
-    <label for="user">Username:</label><br>
-    <input type="text" id="user" name="username"><br>
-
-    <label for="pass">Password:</label><br>
-    <input type="password" id="pass" name="password"><br><br>
-
-    <button type="submit">Login</button>
-</form>
+</center>
 {% endblock %}
