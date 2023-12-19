@@ -28,3 +28,20 @@ class CusOrders(models.Model):
                 str(self.user)
             )
         )
+        
+
+class CusRatingFeedback(models.Model):
+    prod_code = models.IntegerField(default=1)
+    ratings = models.FloatField()
+    feedback = models.CharField(max_length=200)
+    username  = models.CharField(max_length=200, default='username')
+
+    def __str__(self):
+        return str(
+            (
+                str(self.prod_code),
+                str(self.ratings),
+                str(self.feedback),
+                str(self.username)
+            )
+        )

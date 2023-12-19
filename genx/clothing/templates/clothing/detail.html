@@ -1,24 +1,23 @@
 {% extends 'clothing/base.html' %} {% block body %}
 
-<div
-	class="card mb-3"
-	style="max-width: 540px">
-	<div class="row g-0">
-		<div class="col-md-4">
-			<img
-				src="{{ item.item_image }}"
-				class="img-fluid rounded-start"
-				alt="..." />
-		</div>
-		<div class="col-md-8">
-			<div class="card-body">
-				<h5 class="card-title">{{ item.item_name }}</h5>
-				<p class="card-text">{{ item.item_desc }}</p>
-				<p class="card-text">
-					<small class="text-body-secondary">₹{{ item.item_price }}</small>
-				</p>
-			</div>
-		</div>
-	</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <img src="{{ item.item_image }}" alt="Clothing Item" class="img-fluid">
+        </div>
+        <div class="col-lg-6">
+            <h2>{{ item.item_name }}</h2>
+            <p>{{ item.item_desc }}</p>
+            <p>Price: ₹{{ item.item_price }}</p>
+            <p>Size: <select class="form-control">
+                    <option>Small</option>
+                    <option>Medium</option>
+                    <option>Large</option>
+                </select></p>
+            <p>Quantity: <input type="number" class="form-control" value="1" min="1"></p>
+            <a class="btn btn-primary btn-lg btn-block" href="{% url 'users:orders' item.id item.prod_code user.username %}">Buy Now</a>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
