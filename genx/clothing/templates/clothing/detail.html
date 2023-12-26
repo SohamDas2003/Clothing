@@ -1,4 +1,6 @@
-{% extends 'clothing/base.html' %} {% block body %}
+{% extends 'clothing/base.html' %}
+
+{% block body %}
 
 <div class="container mt-5">
     <div class="row">
@@ -6,18 +8,28 @@
             <img src="{{ item.item_image }}" alt="Clothing Item" class="img-fluid">
         </div>
         <div class="col-lg-6">
+            <form method="POST" action="{% url 'users:orders' item.id item.prod_code user.username %}">
+            {% csrf_token %}
             <h2>{{ item.item_name }}</h2>
             <p>{{ item.item_desc }}</p>
             <p>Price: ₹{{ item.item_price }}</p>
-            <p>Size: <select class="form-control">
-                    <option>Small</option>
-                    <option>Medium</option>
-                    <option>Large</option>
-                </select></p>
-            <p>Quantity: <input type="number" class="form-control" value="1" min="1"></p>
-            <a class="btn btn-primary btn-lg btn-block" href="{% url 'users:orders' item.id item.prod_code user.username %}">Buy Now</a>
+            <p>Size: 
+                <select class="form-control" name="size">
+                    <option>XS</option>
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                    <option>XL</option>
+                </select>
+            </p>
+            <p for="qty">Enter Quantity:<input type="number" class="form-control" id="qty" name="qty" value="1" min="1" max="10"></p>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Buy Now</button>
+            <a class="btn btn-secondary btn-lg btn-block" href="{% url 'clothing:index' %}">Back</a>
+        </form>
+        {% for obj in oco %}
+        <a class="btn btn-primary btn-sm" href='{% url 'users:buy' item.item_price obj.quantity %}'>Buy Now</a>
+        {% endfor %}
         </div>
     </div>
 </div>
-
 {% endblock %}
