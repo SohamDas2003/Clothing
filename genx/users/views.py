@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from users.forms import RegisterForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from users.models import CusOrders, CusRatingFeedback
-from users.forms import CusOrdersUpd, CusRatFeedForm
+from clothing.models import CartItem
 from django.http import JsonResponse
 import json
 
@@ -86,100 +84,12 @@ def profilepage(request):
 
 
 
-def Orders(request, id, pdcd, user):
-
-    if request.method == 'POST':
-
-        Obj_CusOrds = CusOrders(
-            prod_code=pdcd,
-            user=user,
-            quantity=request.POST.get('qty'),
-            size = request.POST.get('size')
-        )
-
-        Obj_CusOrds.save()
-
-        return redirect('clothing:detail', item_id=id)
-
-
-def update_orders(request, id, upd_order_id):
-
-    coo = CusOrders.objects.get(order_id=upd_order_id)
-    form = CusOrdersUpd(request.POST or None, instance=coo)
-
+def payment_view(request, grand_total):
     context = {
-        'form':form
-    }
-
-    if request.method == 'POST':
-        form.instance.order_id = coo.order_id
-        form.instance.prod_code = coo.prod_code
-        form.instance.user = request.user.username
-        form.save()
-        return redirect('clothing:detail', item_id=id)
-
-    return render(request, 'users/orders_upd.html', context)
-
-
-def CusRatFeed(request, it_id, pc):
-
-    form = CusRatFeedForm(request.POST or None)
-
-    context = {
-        'form':form
-    }
-
-    if request.method == 'POST':
-        form.instance.prod_code = pc
-        form.instance.username = request.user.username
-        form.save()
-        return redirect('clothing:detail', item_id=it_id)
-
-    return render(request, 'users/item-form.html', context)
-
-
-def update_crf(request, details_id, crf_id):
-
-    crfo = CusRatingFeedback.objects.get(pk=crf_id)
-    form = CusRatFeedForm(request.POST or None, instance=crfo)
-
-    context = {
-        'form':form
-    }
-
-    if form.is_valid():
-        form.save()
-        return redirect('clothing:detail', item_id=details_id)
-
-    return render(request, 'users/crf_upd.html', context)
-
-
-def delete_crf(request, details_id, crf_id):
-
-    crfo = CusRatingFeedback.objects.get(pk=crf_id)
-
-    context = {
-        'crfo':crfo
-    }
-
-    if request.method == 'POST':
-        crfo.delete()
-        return redirect('clothing:detail', item_id=details_id)
-
-    return render(request, 'users/crf_del.html', context)
-
-
-
-def Payment(request, amt, qty):
-
-    context = {
-        'amt': amt,
-        'qty': qty,
-        'tot': amt * qty
+        'grand_total': grand_total,
     }
 
     return render(request, 'users/payment.html', context)
-
 
 def OnApprove(request):
 
@@ -195,4 +105,5 @@ def OnApprove(request):
 
 
 def PaymentSuccess(request):
+    CartItem.objects.filter(user=request.user).delete()
     return render(request, 'users/pymtsuccess.html')

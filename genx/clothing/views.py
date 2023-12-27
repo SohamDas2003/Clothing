@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from clothing.models import Item
-from users.models import CusOrders, CusRatingFeedback
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from clothing.models import Item, CartItem, CusOrders
 
 # Create your views here.
 
@@ -27,16 +29,11 @@ def detail(request, item_id):
         user= request.user.username
     )
     
-    crf = CusRatingFeedback.objects.filter(
-        prod_code=item.prod_code
-    )
-    
     context = {
         'item':item,
         'oco':Obj_CusOrders,
-        'crf':crf,
     }
-
+    
     return render(request, 'clothing/detail.html', context)
 
 
@@ -82,3 +79,63 @@ def kids(request):
     }
 
     return render(request, 'clothing/kids.html', context)
+
+def Orders(request, id, pdcd, user):
+
+    if request.method == 'POST':
+
+        Obj_CusOrds = CusOrders(
+            prod_code=pdcd,
+            user=user,
+            quantity=request.POST.get('qty'),
+            size = request.POST.get('size')
+        )
+
+        Obj_CusOrds.save()
+
+        return redirect('clothing:detail', item_id=id)
+    
+    
+def add_to_cart(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+
+    if request.method == 'POST':
+        selected_size = request.POST.get('size')
+        quantity = int(request.POST.get('qty', 1))
+
+        if request.user.is_authenticated:
+            cart_item, created = CartItem.objects.get_or_create(
+                user=request.user, item=item, size=selected_size
+            )
+
+            if not created:
+                cart_item.quantity += quantity
+            else:
+                cart_item.quantity = quantity
+
+            cart_item.save()
+
+        return redirect('clothing:cart_view')
+
+    return redirect('clothing:cart_view')
+
+
+def cart_view(request):
+    cart_items = CartItem.objects.filter(user=request.user).select_related('item')
+
+    grand_total = sum(cart_item.item.item_price * cart_item.quantity for cart_item in cart_items)
+
+    for cart_item in cart_items:
+        cart_item.total_price = cart_item.item.item_price * cart_item.quantity
+
+    return render(request, 'clothing/cart.html', {'cart_items': cart_items, 'grand_total': grand_total})
+
+
+def remove_from_cart(request, cart_item_id):
+    cart_item = get_object_or_404(CartItem, pk=cart_item_id)
+
+    # Check if the user is the owner of the cart item
+    if request.user == cart_item.user:
+        cart_item.delete()
+
+    return redirect('clothing:cart_view')

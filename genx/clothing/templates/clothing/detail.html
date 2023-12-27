@@ -8,7 +8,7 @@
             <img src="{{ item.item_image }}" alt="Clothing Item" class="img-fluid">
         </div>
         <div class="col-lg-6">
-            <form method="POST" action="{% url 'users:orders' item.id item.prod_code user.username %}">
+            <form method="POST" action="{% url 'clothing:add_to_cart' item.id %}">
             {% csrf_token %}
             <h2>{{ item.item_name }}</h2>
             <p>{{ item.item_desc }}</p>
@@ -23,13 +23,13 @@
                 </select>
             </p>
             <p for="qty">Enter Quantity:<input type="number" class="form-control" id="qty" name="qty" value="1" min="1" max="10"></p>
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Buy Now</button>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Add to Cart</button>
             <a class="btn btn-secondary btn-lg btn-block" href="{% url 'clothing:index' %}">Back</a>
         </form>
-        {% for obj in oco %}
-        <a class="btn btn-primary btn-sm" href='{% url 'users:buy' item.item_price obj.quantity %}'>Buy Now</a>
-        {% endfor %}
         </div>
     </div>
 </div>
 {% endblock %}
+        {% for obj in oco %}
+        <a class="btn btn-primary btn-sm" href='{% url 'users:buy' item.item_price obj.quantity %}'>Buy Now</a>
+        {% endfor %}
