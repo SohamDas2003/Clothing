@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from users.forms import RegisterForm
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,28 +11,31 @@ import json
 # Create your views here.
 
 
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
 
         if form.is_valid():
             username = form.cleaned_data.get('username')
-            messages.success(
-                request,
-                'Welcome {}, your account has been successfully created. Now you may log in'.format(
-                    username)
-            )
-            form.save()
-            return redirect('login')
+
+            # Check if the username already exists
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'Username already exists. Please choose a different username.')
+            else:
+                # Continue with user registration
+                messages.success(
+                    request,
+                    'Welcome {}, your account has been successfully created. Now you may log in'.format(username)
+                )
+                form.save()
+                return redirect('login')
 
     else:
         form = RegisterForm()
 
-        context = {
-            'form': form
-        }
-
-        return render(request, 'users/register.html', context)
+    context = {'form': form}
+    return render(request, 'users/register.html', context)
 
 
 def login_view(request):
