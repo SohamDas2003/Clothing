@@ -1,0 +1,18 @@
+{% extends 'clothing/base.html' %} 
+{% block body %}
+
+    <h2>Your Previous Orders</h2>
+    {% if previous_orders %}
+        <ul>
+            {% for order in previous_orders %}
+                <li>
+                    Product Code: {{ order.prod_code }}
+                    Quantity: {{ order.quantity }}
+                    Size: {{ order.size }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no previous orders.</p>
+    {% endif %}
+{% endblock %}

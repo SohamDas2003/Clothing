@@ -80,22 +80,27 @@ def kids(request):
 
     return render(request, 'clothing/kids.html', context)
 
-def Orders(request, id, pdcd, user):
+@login_required
+def Orders(request, id, pdcd):
+    user = request.user
 
     if request.method == 'POST':
-
         Obj_CusOrds = CusOrders(
             prod_code=pdcd,
             user=user,
             quantity=request.POST.get('qty'),
-            size = request.POST.get('size')
+            size=request.POST.get('size')
         )
-
         Obj_CusOrds.save()
 
         return redirect('clothing:detail', item_id=id)
-    
-    
+    else:
+        previous_orders = CusOrders.objects.filter(user=user)
+        context = {'previous_orders': previous_orders}
+        return render(request, 'clothing/myorders.html', context)
+
+
+
 def add_to_cart(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
 
@@ -134,8 +139,15 @@ def cart_view(request):
 def remove_from_cart(request, cart_item_id):
     cart_item = get_object_or_404(CartItem, pk=cart_item_id)
 
-    # Check if the user is the owner of the cart item
     if request.user == cart_item.user:
         cart_item.delete()
 
     return redirect('clothing:cart_view')
+
+
+def myorders(request):
+    user = request.user
+    previous_orders = CusOrders.objects.filter(user=user)
+
+    context = {'previous_orders': previous_orders}
+    return render(request, 'clothing/myorders.html', context)
