@@ -25,7 +25,6 @@ def detail(request, item_id):
     item = Item.objects.get(pk=item_id)
     
     Obj_CusOrders = CusOrders.objects.filter(
-        prod_code = item.prod_code,
         user= request.user.username
     )
     
@@ -81,19 +80,17 @@ def kids(request):
     return render(request, 'clothing/kids.html', context)
 
 @login_required
-def Orders(request, id, pdcd):
+def Orders(request):
     user = request.user
 
     if request.method == 'POST':
         Obj_CusOrds = CusOrders(
-            prod_code=pdcd,
             user=user,
             quantity=request.POST.get('qty'),
             size=request.POST.get('size')
         )
         Obj_CusOrds.save()
 
-        return redirect('clothing:detail', item_id=id)
     else:
         previous_orders = CusOrders.objects.filter(user=user)
         context = {'previous_orders': previous_orders}
@@ -143,11 +140,3 @@ def remove_from_cart(request, cart_item_id):
         cart_item.delete()
 
     return redirect('clothing:cart_view')
-
-
-def myorders(request):
-    user = request.user
-    previous_orders = CusOrders.objects.filter(user=user)
-
-    context = {'previous_orders': previous_orders}
-    return render(request, 'clothing/myorders.html', context)

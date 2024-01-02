@@ -13,8 +13,7 @@ class RegisterForm(UserCreationForm):
             MaxValueValidator(9999999999, message='Mobile number must be at most 10 digits.'),
             MinValueValidator(0, message='Enter a valid mobile number with only numeric characters.'),
         ],)
-    address = forms.CharField()
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'mob_num', 'address', 'password1', 'password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'mob_num', 'password1', 'password2']
 

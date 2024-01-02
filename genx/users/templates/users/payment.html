@@ -2,16 +2,6 @@
 
 {% block body %}
 
-<br><br><br>
-
-<h3>
-    Pay ₹{{ grand_total }}
-</h3>
-
-<div id="paypal-button-container">
-
-</div>
-
 <script>
     function getCookie(name) {
         let cookieValue = null;
@@ -86,5 +76,70 @@
         }
     }).render('#paypal-button-container');
 </script>
+<br><br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box-element" id="form-wrapper">
+                {% comment %} <form id="form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="inputFirst" class="form-label">First Name</label>
+                            <input type="text" class="form-control" placeholder="First name" aria-label="First name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputLast" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="inputEmail4" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="inputAddress" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="inputAddress" placeholder="Flat number and Building name" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputAddress2" class="form-label">Address 2</label>
+                            <input type="text" class="form-control" id="inputAddress2" placeholder="Area name and Landmark" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="inputCity" class="form-label">City</label>
+                            <input type="text" class="form-control" id="inputCity" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputState" class="form-label">State</label>
+                            <input type="text" class="form-control" id="inputState" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputZip" class="form-label">Pin Code</label>
+                            <input type="number" class="form-control" id="inputZip" min="100000" max="999999" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-block">Save</button>
+                    </div>
+                </form> {% endcomment %}
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="box-element">
+                <h3>
+                    Pay ₹{{ grand_total }}
+                </h3>
+                <div id="paypal-button-container">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
