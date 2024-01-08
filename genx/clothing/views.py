@@ -4,6 +4,7 @@ from clothing.models import Item
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from clothing.models import Item, CartItem, CusOrders
+from django.contrib import messages
 
 # Create your views here.
 
@@ -11,14 +12,19 @@ def index(request):
     itemlist = Item.objects.all()
     
     # for search functionality
-    item_name = request.GET.get('item_name')
+    item_name = request.POST.get('item_name')
     if item_name != '' and item_name is not None:
         itemlist = Item.objects.filter(item_name__icontains=item_name)
-    
+    else:
+        itemlist = Item.objects.all()
+        
     context = {
         'itemlist':itemlist
     }
-
+    
+    if not itemlist:
+        messages.info(request, 'No search results found.')
+        
     return render(request, 'clothing/index.html', context)
 
 def detail(request, item_id):
