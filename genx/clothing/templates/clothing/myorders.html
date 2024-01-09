@@ -5,10 +5,10 @@
     {% if previous_orders %}
         <ul>
             {% for order in previous_orders %}
-                <li>
-                    Product Code: {{ order.prod_code }}
-                    Quantity: {{ order.quantity }}
-                    Size: {{ order.size }}
+                    Order Id: {{ order.order_id }} <br>
+                    Item: {{ order.item }} <br>
+                    Quantity: {{ order.quantity }} <br>
+                    Size: {{ order.size }} <br>
                 </li>
             {% endfor %}
         </ul>

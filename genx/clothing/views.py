@@ -30,13 +30,8 @@ def index(request):
 def detail(request, item_id):
     item = Item.objects.get(pk=item_id)
     
-    Obj_CusOrders = CusOrders.objects.filter(
-        user= request.user.username
-    )
-    
     context = {
         'item':item,
-        'oco':Obj_CusOrders,
     }
     
     return render(request, 'clothing/detail.html', context)

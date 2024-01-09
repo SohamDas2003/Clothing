@@ -3,58 +3,69 @@
 {% block body %}
 
 <br><br><br>
-
-<div class="container">
-	<div class="row">
-		<div class="col-md-4 offset-md-4">
-			<div class="card">
-				<div class="card-header text-white bg-info">
-					<div class="card-title">Register</div>
+<div class="container mt-5">
+	<div class="card mx-auto" style="max-width: 40%">
+		<div class="card-header text-center" style="background-color: #98f0ff; color: #000000; font-weight: bold;">
+			Register
+		</div>
+		<div class="card-body">
+			<form method="POST">
+				{% csrf_token %}
+				<div class="form-group row">
+					<label for="username" class="col-sm-5 col-form-label text-right">Username:</label>
+					<div class="col-sm-7">
+						{{ form.username }}
+					</div>
 				</div>
-				<div class="card-body">
-					<form method="POST">
-						{% csrf_token %}
-						<label class="offset-md-1">Username: </label>
-						<br />
-						<span class="offset-md-1">{{ form.username }}</span>
-						<br />
-						<label class="offset-md-1">Email: </label>
-						<br />
-						<span class="offset-md-1">{{ form.email }}</span>
-						<br />
-						<label class="offset-md-1">First Name: </label>
-						<br />
-						<span class="offset-md-1">{{ form.first_name }}</span>
-						<br />
-						<label class="offset-md-1">Last Name: </label>
-						<br />
-						<span class="offset-md-1">{{ form.last_name }}</span>
-						<br />
-						<label class="offset-md-1">Phone Number: </label>
-						<br />
-						<span class="offset-md-1">{{ form.mob_num }}</span>
-						<br />
-						<label class="offset-md-1">Password: </label>
-						<br />
-						<span class="offset-md-1">{{ form.password1 }}</span>
-						<br />
-						<label class="offset-md-1">Confirm Password: </label>
-						<span class="offset-md-1">{{ form.password2 }}</span>
-						<br />
-						<br />
-						<button
-							class="offset-md-3 btn btn-primary"
-							type="submit">
-							Sign Up
-						</button>
-					</form>
+				<div class="form-group row">
+					<label for="email" class="col-sm-5 col-form-label text-right">Email:</label>
+					<div class="col-sm-7">
+						{{ form.email }}
+					</div>
 				</div>
+				<div class="form-group row">
+					<label for="first_name" class="col-sm-5 col-form-label text-right">First Name:</label>
+					<div class="col-sm-7">
+						{{ form.first_name }}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="last_name" class="col-sm-5 col-form-label text-right">Last Name:</label>
+					<div class="col-sm-7">
+						{{ form.last_name }}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="mob_num" class="col-sm-5 col-form-label text-right">Phone Number:</label>
+					<div class="col-sm-7">
+						{{ form.mob_num }}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="password1" class="col-sm-5 col-form-label text-right">Password:</label>
+					<div class="col-sm-7">
+						{{ form.password1 }}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="password2" class="col-sm-5 col-form-label text-right">Confirm Password:</label>
+					<div class="col-sm-7">
+						{{ form.password2 }}
+					</div>
+				</div>
+				<br>
+				<div class="form-group row">
+					<div class=" text-center">
+						<button class="btn btn-primary" type="submit" style="width: 70%;">Sign Up</button>
+					</div>
+				</div>
+			</form>
+			<br>
+			<div class="text-center">
+				Already have an account? <a href="{% url 'login' %}">Login</a>
 			</div>
 		</div>
 	</div>
 </div>
-
-
-<br><br><br>
 
 {% endblock %}
