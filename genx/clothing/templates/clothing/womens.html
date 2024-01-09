@@ -1,4 +1,14 @@
 {% extends 'clothing/base.html' %} {% block body %}
+<style>
+	.card {
+		transition: transform 0.2s;
+	}
+
+	.card:hover {
+		transform: scale(1.05);
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+	}
+</style>
   <!-- Header-->
   <header class="bg-dark py-5">
       <div class="container px-4 px-lg-5 my-5">

@@ -25,15 +25,22 @@ class CusOrders(models.Model):
         ('L', 'Large'),
         ('XL', 'Extra Large'),
     )
+    order_status_choices = (
+        ('Order Confirmed', 'Order Confirmed'),
+        ('Shipped', 'Shipped'),
+        ('Out for Delivery', 'Out for Delivery'),
+        ('Delivered', 'Delivered'),
 
+    )
     order_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     size = models.CharField(max_length=2, choices=size, default='M')
+    order_status = models.CharField(max_length=20, choices=order_status_choices, default='Order Confirmed')
 
     def __str__(self):
-        return f"[Order ID: {self.order_id}] {self.quantity} x {self.item.item_name} (Size: {self.size}) {self.user.username}'s order"
+        return f"[Order ID: {self.order_id}] {self.quantity} x {self.item.item_name} (Size: {self.size}) {self.user.username}'s order (Status: {self.order_status})"
 
 class CartItem(models.Model):
     size = (

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from clothing.models import Item
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -94,7 +93,10 @@ def Orders(request):
 
     else:
         previous_orders = CusOrders.objects.filter(user=user)
-        context = {'previous_orders': previous_orders}
+        for order in previous_orders:
+            order.total_amount = order.item.item_price * order.quantity
+        grand_total = sum(order.item.item_price * order.quantity for order in previous_orders)
+        context = {'previous_orders': previous_orders, 'grand_total': grand_total,}
         return render(request, 'clothing/myorders.html', context)
 
 
@@ -141,3 +143,27 @@ def remove_from_cart(request, cart_item_id):
         cart_item.delete()
 
     return redirect('clothing:cart_view')
+
+def create_order(cart_item, user, request):
+    try:
+        order = CusOrders.objects.create(
+            user=user,
+            item=cart_item.item,
+            quantity=cart_item.quantity,
+            size=cart_item.size
+        )
+        return order
+    except Exception as e:
+        messages.error(request, f"Error creating order for {cart_item.item.item_name}: {str(e)}")
+        return None
+
+def create_orders_from_cart(request, cart_items):
+    user = request.user
+    orders_created = []
+
+    for cart_item in cart_items:
+        order = create_order(cart_item, user, request)
+        if order:
+            orders_created.append(order)
+
+    return orders_created

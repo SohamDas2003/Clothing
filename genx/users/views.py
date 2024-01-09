@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from clothing.models import CartItem
+from clothing.views import create_orders_from_cart
 from django.http import JsonResponse
 import json
 
@@ -108,6 +109,17 @@ def OnApprove(request):
         return JsonResponse(context)
 
 
+# def PaymentSuccess(request):
+#     CartItem.objects.filter(user=request.user).delete()
+#     return render(request, 'users/pymtsuccess.html')
+
 def PaymentSuccess(request):
-    CartItem.objects.filter(user=request.user).delete()
-    return render(request, 'users/pymtsuccess.html')
+    cart_items = CartItem.objects.filter(user=request.user)
+    
+    # Create orders from cart items
+    orders_created = create_orders_from_cart(request, cart_items)
+
+    # Delete cart items after creating orders
+    cart_items.delete()
+
+    return render(request, 'users/pymtsuccess.html', {'orders_created': orders_created})
