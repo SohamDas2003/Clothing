@@ -11,8 +11,6 @@ import json
 
 # Create your views here.
 
-
-
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -20,11 +18,9 @@ def register(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
 
-            # Check if the username already exists
             if User.objects.filter(username=username).exists():
                 messages.error(request, 'Username already exists. Please choose a different username.')
             else:
-                # Continue with user registration
                 messages.success(
                     request,
                     'Welcome {}, your account has been successfully created. Now you may log in'.format(username)
@@ -88,7 +84,6 @@ def profilepage(request):
     return render(request, 'users/profile.html')
 
 
-
 def payment_view(request, grand_total):
     context = {
         'grand_total': grand_total,
@@ -109,17 +104,11 @@ def OnApprove(request):
         return JsonResponse(context)
 
 
-# def PaymentSuccess(request):
-#     CartItem.objects.filter(user=request.user).delete()
-#     return render(request, 'users/pymtsuccess.html')
-
 def PaymentSuccess(request):
     cart_items = CartItem.objects.filter(user=request.user)
     
-    # Create orders from cart items
     orders_created = create_orders_from_cart(request, cart_items)
 
-    # Delete cart items after creating orders
     cart_items.delete()
 
     return render(request, 'users/pymtsuccess.html', {'orders_created': orders_created})

@@ -9,7 +9,6 @@
 		box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	}
 </style>
-  <!-- Header-->
   <header class="bg-dark py-5">
       <div class="container px-4 px-lg-5 my-5">
           <div class="text-center text-white">
@@ -24,15 +23,11 @@
 				{% for item in itemlist %}
 					<div class="col mb-5" onclick="window.location.href='{% url 'clothing:detail' item.id %}'" style="cursor: pointer;">
 						<div class="card h-100">
-							<!-- Product image-->
 							<img class="card-img-top" src="{{ item.item_image }}" alt="..." />
-							<!-- Product details-->
 							<div class="card-body p-4">
 								<div class="text-center">
-									<!-- Product name-->
 									<h4 class="fw-bolder">{{ item.item_name }}</h4>
 									<p class="fw-bolder">{{ item.item_desc }}</p>
-									<!-- Product price-->
 									₹{{ item.item_price }}
 								</div>
 							</div>

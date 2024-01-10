@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from clothing.models import Item, CartItem, CusOrders
 from django.contrib import messages
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -139,6 +140,19 @@ def create_order(cart_item, user, request):
             quantity=cart_item.quantity,
             size=cart_item.size
         )
+        send_mail(
+            "Your Order has been successfully placed",
+            f"Dear {order.user},\n\n"
+            f"Your order #{order.order_id} has been successfully placed!\n"                    
+            f"Here are the details:\n"
+            f"- Item Name: {order.item.item_name}\n"
+            f"- Size: {order.size}\n"                f"- Quantity: {order.quantity}\n"
+            f"- Price: {order.item.item_price} x {order.quantity} = {order.item.item_price * order.quantity}\n\n"
+            f"Thank you for your purchase!",
+            "sohamdas704@gmail.com",
+            [user.email],
+            fail_silently=False,
+        )
         return order
     except Exception as e:
         messages.error(request, f"Error creating order for {cart_item.item.item_name}: {str(e)}")
@@ -159,10 +173,25 @@ def create_orders_from_cart(request, cart_items):
 
 def cancel_order(request, order_id):
     order = get_object_or_404(CusOrders, pk=order_id, user=request.user)  # Ensure user owns the order
-
+    user = request.user
+    
     if request.method == 'POST':
         order.delete()
         messages.success(request, 'Order cancelled successfully!')
+        send_mail(
+            "Your Order has been Cancelled",
+            f"Dear {order.user},\n\n"
+            f"Your order #{order.order_id} has been Cancelled!\n"                    
+            f"Here are the details:\n"
+            f"- Item Name: {order.item.item_name}\n"
+            f"- Size: {order.size}\n"                
+            f"- Quantity: {order.quantity}\n"
+            f"- Price: {order.item.item_price} x {order.quantity} = {order.item.item_price * order.quantity}\n\n"
+            f"We're sorry to see you go! If you ever change your mind, we'll be here to welcome you back with open arms. See you again soon!",
+            "sohamdas704@gmail.com",
+            [user.email],
+            fail_silently=False,
+        )
     else:
         context = {'order': order}
         return render(request, 'clothing/cancel_order.html', context)

@@ -1,5 +1,4 @@
 {% extends 'clothing/base.html' %}
-
 {% block body %}
 
 <div class="container mt-5">
@@ -30,6 +29,3 @@
     </div>
 </div>
 {% endblock %}
-        {% for obj in oco %}
-        <a class="btn btn-primary btn-sm" href='{% url 'users:buy' item.item_price obj.quantity %}'>Buy Now</a>
-        {% endfor %}
