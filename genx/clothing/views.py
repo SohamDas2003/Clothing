@@ -36,14 +36,8 @@ def detail(request, item_id):
     return render(request, 'clothing/detail.html', context)
 
 
-
 def mens(request):
     itemlist = Item.objects.filter(category='m')
-
-    # for search functionality
-    item_name = request.GET.get('item_name')
-    if item_name != '' and item_name is not None:
-        itemlist = itemlist.filter(item_name__icontains=item_name)
 
     context = {
         'itemlist': itemlist
@@ -51,13 +45,9 @@ def mens(request):
 
     return render(request, 'clothing/mens.html', context)
 
+
 def womens(request):
     itemlist = Item.objects.filter(category='f')
-
-    # for search functionality
-    item_name = request.GET.get('item_name')
-    if item_name != '' and item_name is not None:
-        itemlist = itemlist.filter(item_name__icontains=item_name)
 
     context = {
         'itemlist': itemlist
@@ -65,19 +55,16 @@ def womens(request):
 
     return render(request, 'clothing/womens.html', context)
 
+
 def kids(request):
     itemlist = Item.objects.filter(category='k')
-
-    # for search functionality
-    item_name = request.GET.get('item_name')
-    if item_name != '' and item_name is not None:
-        itemlist = itemlist.filter(item_name__icontains=item_name)
-
+    
     context = {
         'itemlist': itemlist
     }
 
     return render(request, 'clothing/kids.html', context)
+
 
 @login_required
 def Orders(request):
@@ -98,7 +85,6 @@ def Orders(request):
         grand_total = sum(order.item.item_price * order.quantity for order in previous_orders)
         context = {'previous_orders': previous_orders, 'grand_total': grand_total,}
         return render(request, 'clothing/myorders.html', context)
-
 
 
 def add_to_cart(request, item_id):
@@ -144,6 +130,7 @@ def remove_from_cart(request, cart_item_id):
 
     return redirect('clothing:cart_view')
 
+
 def create_order(cart_item, user, request):
     try:
         order = CusOrders.objects.create(
@@ -157,6 +144,7 @@ def create_order(cart_item, user, request):
         messages.error(request, f"Error creating order for {cart_item.item.item_name}: {str(e)}")
         return None
 
+
 def create_orders_from_cart(request, cart_items):
     user = request.user
     orders_created = []
@@ -167,3 +155,16 @@ def create_orders_from_cart(request, cart_items):
             orders_created.append(order)
 
     return orders_created
+
+
+def cancel_order(request, order_id):
+    order = get_object_or_404(CusOrders, pk=order_id, user=request.user)  # Ensure user owns the order
+
+    if request.method == 'POST':
+        order.delete()
+        messages.success(request, 'Order cancelled successfully!')
+    else:
+        context = {'order': order}
+        return render(request, 'clothing/cancel_order.html', context)
+
+    return redirect('clothing:myorders')
