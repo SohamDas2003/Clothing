@@ -95,6 +95,10 @@ def add_to_cart(request, item_id):
         selected_size = request.POST.get('size')
         quantity = int(request.POST.get('qty', 1))
 
+        if quantity < 1:
+            quantity = 1
+        elif quantity > 10:
+            quantity = 10
         if request.user.is_authenticated:
             cart_item, created = CartItem.objects.get_or_create(
                 user=request.user, item=item, size=selected_size
@@ -147,7 +151,7 @@ def create_order(cart_item, user, request):
             f"Here are the details:\n"
             f"- Item Name: {order.item.item_name}\n"
             f"- Size: {order.size}\n"                f"- Quantity: {order.quantity}\n"
-            f"- Price: {order.item.item_price} x {order.quantity} = {order.item.item_price * order.quantity}\n\n"
+            f"- Price: ₹{order.item.item_price} x {order.quantity} = ₹{order.item.item_price * order.quantity}\n\n"
             f"Thank you for your purchase!",
             "sohamdas704@gmail.com",
             [user.email],
@@ -181,12 +185,12 @@ def cancel_order(request, order_id):
         send_mail(
             "Your Order has been Cancelled",
             f"Dear {order.user},\n\n"
-            f"Your order #{order.order_id} has been Cancelled!\n"                    
+            f"Your order has been Cancelled!\n"                    
             f"Here are the details:\n"
             f"- Item Name: {order.item.item_name}\n"
             f"- Size: {order.size}\n"                
             f"- Quantity: {order.quantity}\n"
-            f"- Price: {order.item.item_price} x {order.quantity} = {order.item.item_price * order.quantity}\n\n"
+            f"- Price: ₹{order.item.item_price} x {order.quantity} = ₹{order.item.item_price * order.quantity}\n\n"
             f"We're sorry to see you go! If you ever change your mind, we'll be here to welcome you back with open arms. See you again soon!",
             "sohamdas704@gmail.com",
             [user.email],
