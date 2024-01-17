@@ -6,7 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from clothing.models import CartItem
 from clothing.views import create_orders_from_cart
-from django.contrib.auth import views as auth_views 
 from django.http import JsonResponse
 import json
 
