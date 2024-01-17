@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from django.core.validators import RegexValidator
+from django.core.validators import  MaxValueValidator, MinValueValidator, RegexValidator
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -21,13 +21,15 @@ class RegisterForm(UserCreationForm):
             ),
         ],
     )
-    mob_num = forms.CharField(
+    mob_num = forms.IntegerField(
         label='Mobile Number',
         validators=[
             RegexValidator(
                 regex='^[0-9]{10}$',
                 message='Mobile Number must be a 10-digit numeric value.',
             ),
+            MaxValueValidator(9999999999, message='Mobile number must be at most 10 digits.'),
+            MinValueValidator(1000000000, message='Enter a valid mobile number with only numeric characters.'),
         ],
     )
 
