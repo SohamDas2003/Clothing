@@ -1,0 +1,32 @@
+{% extends 'clothing/base.html' %}
+{% block body %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <img src="{{ item.item_image }}" alt="Clothing Item" class="img-fluid">
+        </div>
+        <div class="col-lg-6">
+            <form method="POST" action="{% url 'clothing:add_to_cart' item.id %}">
+                {% csrf_token %}
+                <h2>{{ item.item_name }}</h2>
+                <p>{{ item.item_desc }}</p>
+                <p>Price: ₹{{ item.item_price }}</p>
+                <p>Size:
+                    <select class="form-control" name="size">
+                        <option>XS</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                    </select>
+                </p>
+                <p for="qty">Enter Quantity:<input type="number" class="form-control" id="qty" name="qty" value="1"
+                        min="1" max="10"></p>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Add to Cart</button>
+                <a class="btn btn-secondary btn-lg btn-block" href="{% url 'clothing:index' %}">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

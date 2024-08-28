@@ -1,0 +1,52 @@
+{% extends 'clothing/base.html' %} {% block body %}
+
+
+<br><br><br><br><br><br>
+<center>
+<div class="card text" style="width:40%">
+    <div class="card-header" style="background-color: #98f0ff; color: #000000; font-weight: bold;">Login</div>
+        <div class="card-body">
+            <p class="card-text">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label
+                            for="user"
+                            class="form-label"
+                            >Username</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="user"
+                            name="username" />
+                    </div>
+                    <div class="mb-3">
+                        <label
+                            for="pass"
+                            class="form-label"
+                            >Password</label
+                        >
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="pass"
+                            name="password" />
+                    </div>
+                    <br>
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        style="width: 50%;">
+                        Submit
+                    </button>
+                </form>
+                <br>
+                <p><a href="{% url 'password_reset' %}">Forgot your Password?</a></p>
+                
+                <div>Don't have an account <a href="{% url 'register' %}">Sign Up</a></div>
+            </p>
+        </div>
+</div>
+</center>
+{% endblock %}

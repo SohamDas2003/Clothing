@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Genx</title>
+	<style>
+		.card {
+			transition: transform 0.2s;
+		}
+
+		.card:hover {
+			transform: scale(1.05);
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+		}
+	</style>
+</head>
+
+<body class="bg-light bg-gradient">
+	{% extends 'clothing/base.html' %} {% block body %}
+	<center>
+		<div id="carouselExampleAutoplaying" class="carousel slide mb-5" data-bs-ride="carousel"
+			style="height: 400px; width: 100%">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="https://marketplace.canva.com/EAFoEJMTGiI/1/0/1600w/canva-beige-aesthetic-new-arrival-fashion-banner-landscape-cNjAcBMeF9s.jpg"
+						class="d-block" alt="..." style="max-width: 100%; aspect-ratio: 30/10; object-fit: cover" />
+				</div>
+				<div class="carousel-item">
+					<img src="https://img.freepik.com/free-vector/abstract-sales-landing-page-with-photo_52683-28047.jpg?w=1800&t=st=1703074484~exp=1703075084~hmac=bc3ca5697b494d6b34c97421f0d32d04a9e29193dc6e2a6c5f4dd3439e346f76"
+						class="d-block" alt="..." style="max-width: 100%; aspect-ratio: 30/10; object-fit: cover" />
+				</div>
+				<div class="carousel-item">
+					<img src="https://img.freepik.com/free-vector/horizontal-sale-banner-template_23-2148897328.jpg?w=2000&t=st=1703074419~exp=1703075019~hmac=14e6333c8b12c5d615a653b5a168fb2838c547d5f8b3e575ef66b54ff7444e2e"
+						class="d-block" alt="..." style="max-width: 100%; aspect-ratio: 30/10; object-fit: cover" />
+				</div>
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+				data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+				data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+	</center>
+	<section class="py-5">
+		<div class="container px-4 px-lg-5 mt-5">
+			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				{% for item in itemlist %}
+				{% url 'clothing:detail' item.id as detail_url %}
+				<div class="col mb-5" onclick="window.location.href='{{ detail_url }}'" style="cursor: pointer;">
+					<div class="card h-100">
+						<!-- Product image-->
+						<img class="card-img-top" src="{{ item.item_image }}" alt="..." />
+						<!-- Product details-->
+						<div class="card-body p-4">
+							<div class="text-center">
+								<!-- Product name-->
+								<h4 class="fw-bolder">{{ item.item_name }}</h4>
+								<p class="fw-bolder">{{ item.item_desc }}</p>
+								<!-- Product price-->
+								₹{{ item.item_price }}
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<footer id="footer" class="overflow-hidden">
+		<div class="container">
+			<div class="row">
+				<div class="footer-top-area">
+					<div class="row d-flex flex-wrap justify-content-between">
+						<div class="col-lg-3 col-sm-6 pb-3">
+							<div class="footer-menu">
+								<img src="https://mir-s3-cdn-cf.behance.net/projects/404/48ad70142099899.Y3JvcCwzMzk5LDI2NTksMzAyLDA.jpg"
+									class="logo" width="150" height="70">
+								<p>
+								<h6>If you would like to experience the best of online shopping for men, women and kids
+									in India, you are at the right place. Genx is the ultimate destination for fashion
+									and lifestyle.</h6>
+								</p>
+							</div>
+						</div>
+						<div class="col-lg-2 col-sm-6 pb-3">
+							<div class="footer-menu text-uppercase">
+								<h5 class="widget-title pb-2">Quick Links</h5>
+								<ul class="menu-list list-unstyled text-uppercase">
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">Home</a>
+									</li>
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">About</a>
+									</li>
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">Shop</a>
+									</li>
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">Blogs</a>
+									</li>
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">Contact</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-3 col-sm-6 pb-3">
+							<div class="footer-menu text-uppercase">
+								<h5 class="widget-title pb-2">Help & Info Help</h5>
+								<ul class="menu-list list-unstyled">
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">Track Your Order</a>
+									</li>
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">Returns Policies</a>
+									</li>
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">Shipping + Delivery</a>
+									</li>
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">Contact Us</a>
+									</li>
+									<li class="menu-item pb-2">
+										<a href="#" class="text-dark text-decoration-none">Faqs</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-3 col-sm-6 pb-3">
+							<div class="footer-menu contact-item">
+								<h5 class="widget-title text-uppercase pb-2">Contact Us</h5>
+								<p>Do you have any queries or suggestions? <a href="mailto:"
+										class="text-decoration-none">genx@gmail.com</a>
+								</p>
+								<p>If you need support? Just give us a call. <a href="#"
+										class="text-decoration-none">+91 7002042003</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+	</footer>
+	{% endblock %}
+</body>
+
+</html>

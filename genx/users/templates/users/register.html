@@ -1,0 +1,92 @@
+{% extends 'clothing/base.html' %}
+
+{% block body %}
+
+<br><br><br>
+<div class="container mt-5">
+	<div class="card mx-auto" style="max-width: 40%">
+		<div class="card-header text-center" style="background-color: #98f0ff; color: #000000; font-weight: bold;">
+			Register
+		</div>
+		<div class="card-body">
+			<form method="POST">
+				{% csrf_token %}
+				<div class="form-group row">
+					<label for="username" class="col-sm-5 col-form-label text-right">Username:</label>
+					<div class="col-sm-7">
+						{{ form.username }}
+						{% for error in form.username.errors %}
+						<p class="text-danger">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="email" class="col-sm-5 col-form-label text-right">Email:</label>
+					<div class="col-sm-7">
+						{{ form.email }}
+						{% for error in form.email.errors %}
+						<p class="text-danger">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="first_name" class="col-sm-5 col-form-label text-right">First Name:</label>
+					<div class="col-sm-7">
+						{{ form.first_name }}
+						{% for error in form.first_name.errors %}
+						<p class="text-danger">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="last_name" class="col-sm-5 col-form-label text-right">Last Name:</label>
+					<div class="col-sm-7">
+						{{ form.last_name }}
+						{% for error in form.last_name.errors %}
+						<p class="text-danger">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="mob_num" class="col-sm-5 col-form-label text-right">Mobile Number:</label>
+					<div class="col-sm-7">
+						{{ form.mob_num }}
+						{% for error in form.mob_num.errors %}
+						<p class="text-danger">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="password1" class="col-sm-5 col-form-label text-right">Password:</label>
+					<div class="col-sm-7">
+						{{ form.password1 }}
+						{% for error in form.password1.errors %}
+						<p class="text-danger">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="password2" class="col-sm-5 col-form-label text-right">Confirm Password:</label>
+					<div class="col-sm-7">
+						{{ form.password2 }}
+						{% for error in form.password2.errors %}
+						<p class="text-danger">{{ error }}</p>
+						{% endfor %}
+					</div>
+				</div>
+				<br>
+				<div class="form-group row">
+					<div class=" text-center">
+						<button class="btn btn-primary" type="submit" style="width: 70%;">Sign Up</button>
+					</div>
+				</div>
+			</form>
+			<br>
+			<div class="text-center">
+				Already have an account? <a href="{% url 'login' %}">Login</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

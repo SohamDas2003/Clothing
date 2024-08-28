@@ -1,0 +1,119 @@
+{% extends 'clothing/base.html' %} {% block body %}
+<style>
+	.card {
+		transition: transform 0.2s;
+	}
+
+	.card:hover {
+		transform: scale(1.05);
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+	}
+</style>
+<header class="bg-dark py-5">
+	<div class="container px-4 px-lg-5 my-5">
+		<div class="text-center text-white">
+			<h1 class="display-4 fw-bolder">Shop in style</h1>
+			<p class="lead fw-normal text-white-50 mb-0">Empowering Women Through Style.</p>
+		</div>
+	</div>
+</header>
+<section class="py-5">
+	<div class="container px-4 px-lg-5 mt-5">
+		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+			{% for item in itemlist %}
+			{% url 'clothing:detail' item.id as detail_url %}
+			<div class="col mb-5" onclick="window.location.href='{{ detail_url }}'" style="cursor: pointer;">
+				<div class="card h-100">
+					<img class="card-img-top" src="{{ item.item_image }}" alt="..." />
+					<div class="card-body p-4">
+						<div class="text-center">
+							<h4 class="fw-bolder">{{ item.item_name }}</h4>
+							<p class="fw-bolder">{{ item.item_desc }}</p>
+							₹{{ item.item_price }}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+<footer id="footer" class="overflow-hidden">
+	<div class="container">
+		<div class="row">
+			<div class="footer-top-area">
+				<div class="row d-flex flex-wrap justify-content-between">
+					<div class="col-lg-3 col-sm-6 pb-3">
+						<div class="footer-menu">
+							<img src="https://mir-s3-cdn-cf.behance.net/projects/404/48ad70142099899.Y3JvcCwzMzk5LDI2NTksMzAyLDA.jpg"
+								class="logo" width="150" height="70">
+							<p>
+							<h6>If you would like to experience the best of online shopping for men, women and kids in
+								India, you are at the right place. Genx is the ultimate destination for fashion and
+								lifestyle.</h6>
+							</p>
+
+						</div>
+					</div>
+					<div class="col-lg-2 col-sm-6 pb-3">
+						<div class="footer-menu text-uppercase">
+							<h5 class="widget-title pb-2">Quick Links</h5>
+							<ul class="menu-list list-unstyled text-uppercase">
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">Home</a>
+								</li>
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">About</a>
+								</li>
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">Shop</a>
+								</li>
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">Blogs</a>
+								</li>
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">Contact</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6 pb-3">
+						<div class="footer-menu text-uppercase">
+							<h5 class="widget-title pb-2">Help & Info Help</h5>
+							<ul class="menu-list list-unstyled">
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">Track Your Order</a>
+								</li>
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">Returns Policies</a>
+								</li>
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">Shipping + Delivery</a>
+								</li>
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">Contact Us</a>
+								</li>
+								<li class="menu-item pb-2">
+									<a href="#" class="text-dark text-decoration-none">Faqs</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6 pb-3">
+						<div class="footer-menu contact-item">
+							<h5 class="widget-title text-uppercase pb-2">Contact Us</h5>
+							<p>Do you have any queries or suggestions? <a href="mailto:"
+									class="text-decoration-none">genx@gmail.com</a>
+							</p>
+							<p>If you need support? Just give us a call. <a href="#" class="text-decoration-none">+91
+									7002042003</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+</footer>
+{% endblock %}
