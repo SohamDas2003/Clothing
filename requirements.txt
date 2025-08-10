@@ -1,0 +1,12 @@
+# Core Django framework
+Django>=4.2.5,<5.0
+
+# Image processing (required for ImageField in Profile model)
+Pillow>=10.0.0
+
+# For handling environment variables (optional but recommended)
+python-decouple>=3.8
+
+# For production deployment (when you deploy)
+gunicorn>=21.0.0
+whitenoise>=6.5.0
